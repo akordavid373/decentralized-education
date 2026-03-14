@@ -1,0 +1,145 @@
+name: Bounty Management Automation
+
+on:
+  issues:
+    types: [opened, closed, labeled, unlabeled]
+  pull_request:
+    types: [opened, closed, ready_for_review]
+  issue_comment:
+    types: [created]
+
+jobs:
+  bounty-assignment:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'bounty') && github.event.action == 'labeled' && contains(github.event.label.name, 'assigned')
+    
+    steps:
+    - name: Assign bounty
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issue = context.payload.issue;
+          const assignee = context.payload.assignee;
+          
+          // Add assigned label
+          await github.rest.issues.addLabels({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue.number,
+            labels: ['assigned', 'in-progress']
+          });
+          
+          // Post assignment comment
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue.number,
+            body: `🎯 **Bounty Assigned!**
+            
+            This bounty has been assigned to @${assignee.login}.
+            
+            **Next Steps:**
+            1. Create a feature branch: \`git checkout -b bounty/${issue.number}-brief-description\`
+            2. Complete the work according to the requirements
+            3. Submit a pull request with detailed description
+            4. Wait for review and approval
+            
+            **Reward:** ${issue.body.match(/ETH:\s*([0-9.]+)/)?.[1] || 'TBD'} ETH
+            **Deadline:** ${issue.body.match(/Deadline:\s*(.+)/)?.[1] || 'No deadline set'}
+            
+            Good luck! 🚀`
+          });
+
+  bounty-completion:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'bounty')
+    
+    steps:
+    - name: Process bounty completion
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const issueNumber = pr.body.match(/Closes\s+#(\d+)/)?.[1];
+          
+          if (issueNumber) {
+            // Close the issue
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: parseInt(issueNumber),
+              state: 'closed',
+              labels: ['completed']
+            });
+            
+            // Get issue details for reward amount
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: parseInt(issueNumber)
+            });
+            
+            const rewardAmount = issue.data.body.match(/ETH:\s*([0-9.]+)/)?.[1] || '0.1';
+            
+            // Post completion comment
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: parseInt(issueNumber),
+              body: `🎉 **Bounty Completed!**
+              
+              **Contributor:** @${pr.user.login}
+              **Pull Request:** #${pr.number}
+              **Reward:** ${rewardAmount} ETH
+              
+              The reward will be distributed via DripsNetwork within 24 hours.
+              
+              Thank you for your contribution to decentralized education! 🙏`
+            });
+            
+            // Trigger DripsNetwork reward distribution
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'drips-reward.yml',
+              ref: 'main',
+              inputs: {
+                contributor: pr.user.login,
+                amount: rewardAmount,
+                issue_number: issueNumber
+              }
+            });
+          }
+
+  drips-reward:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.contributor
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        cd scripts
+        npm install ethers dotenv
+        
+    - name: Distribute reward via DripsNetwork
+      env:
+        PRIVATE_KEY: ${{ secrets.DRIPS_PRIVATE_KEY }}
+        ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
+        DRIPS_CONTRACT_ADDRESS: ${{ secrets.DRIPS_CONTRACT_ADDRESS }}
+        CONTRIBUTOR_ADDRESS: ${{ github.event.inputs.contributor_address }}
+        REWARD_AMOUNT: ${{ github.event.inputs.amount }}
+      run: |
+        cd scripts
+        node distribute-reward.js \
+          --contributor $CONTRIBUTOR_ADDRESS \
+          --amount $REWARD_AMOUNT \
+          --issue ${{ github.event.inputs.issue_number }}

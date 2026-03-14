@@ -1,0 +1,36 @@
+{
+  "name": "decentralized-education",
+  "version": "1.0.0",
+  "description": "A decentralized education platform for learning Web3, blockchain, and open-source development",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "start": "npm run start:backend",
+    "start:backend": "cd backend && npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "setup": "npm run install:all && cd backend && npx prisma migrate dev && npx prisma generate"
+  },
+  "keywords": [
+    "web3",
+    "education",
+    "blockchain",
+    "drips",
+    "decentralized",
+    "learning"
+  ],
+  "author": "Decentralized Education Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ]
+}

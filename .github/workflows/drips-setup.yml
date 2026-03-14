@@ -1,0 +1,45 @@
+name: DripsNetwork Setup
+
+on:
+  push:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  setup-drips:
+    runs-on: ubuntu-latest
+    name: Setup DripsNetwork Funding
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        cd scripts
+        npm install ethers dotenv
+        
+    - name: Setup Drips for project
+      env:
+        PRIVATE_KEY: ${{ secrets.DRIPS_PRIVATE_KEY }}
+        ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
+        DRIPS_CONTRACT_ADDRESS: ${{ secrets.DRIPS_CONTRACT_ADDRESS }}
+      run: |
+        cd scripts
+        node setup-project-drips.js
+        
+    - name: Create funding stream
+      env:
+        PRIVATE_KEY: ${{ secrets.DRIPS_PRIVATE_KEY }}
+        ETHEREUM_RPC_URL: ${{ secrets.ETHEREUM_RPC_URL }}
+        DRIPS_CONTRACT_ADDRESS: ${{ secrets.DRIPS_CONTRACT_ADDRESS }}
+        MONTHLY_BUDGET: ${{ secrets.MONTHLY_BUDGET }}
+      run: |
+        cd scripts
+        node create-funding-stream.js

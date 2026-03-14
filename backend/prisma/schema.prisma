@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  walletAddress     String?   @unique
+  email             String?   @unique
+  username          String?   @unique
+  displayName       String?
+  bio               String?
+  avatar            String?
+  reputation        Int       @default(0)
+  totalEarned       String    @default("0")
+  skills            String[]
+  certifications   Certification[]
+  createdBounties   Bounty[]  @relation("BountyCreator")
+  assignedBounties  Bounty[]  @relation("BountyAssignee")
+  submissions       Submission[]
+  reviews           Review[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Bounty {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  category    BountyCategory
+  difficulty  Difficulty
+  reward      String
+  status      BountyStatus @default(OPEN)
+  tags        String[]
+  requirements String[]
+  creatorId   String
+  creator     User        @relation("BountyCreator", fields: [creatorId], references: [id])
+  assigneeId  String?
+  assignee    User?       @relation("BountyAssignee", fields: [assigneeId], references: [id])
+  submissions Submission[]
+  reviews     Review[]
+  deadline    DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("bounties")
+}
+
+model Submission {
+  id          String   @id @default(cuid())
+  bountyId    String
+  bounty      Bounty   @relation(fields: [bountyId], references: [id])
+  submitterId String
+  submitter   User     @relation(fields: [submitterId], references: [id])
+  content     String
+  attachments String[]
+  status      SubmissionStatus @default(PENDING)
+  reviews     Review[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("submissions")
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id])
+  reviewerId   String
+  reviewer     User     @relation(fields: [reviewerId], references: [id])
+  bountyId     String
+  bounty       Bounty   @relation(fields: [bountyId], references: [id])
+  rating       Int
+  comment      String
+  approved     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+model Certification {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  title       String
+  description String
+  issuer      String
+  issueDate   DateTime
+  expiryDate  DateTime?
+  credentialUrl String?
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@map("certifications")
+}
+
+enum BountyCategory {
+  CONTENT_CREATION
+  DEVELOPMENT
+  DESIGN_UX
+  TRANSLATION
+  REVIEW
+  MAINTENANCE
+  RESEARCH
+  COMMUNITY
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum BountyStatus {
+  OPEN
+  ASSIGNED
+  IN_PROGRESS
+  UNDER_REVIEW
+  COMPLETED
+  CANCELLED
+}
+
+enum SubmissionStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  REVISION_REQUIRED
+}
