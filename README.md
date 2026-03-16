@@ -1,6 +1,6 @@
-# 🎓🌟 Decentralized Education Platform (Stellar-Based)
+# 🎓🌟 Decentralized Education Platform (Stellar)
 
-A full-stack Web3 education platform powered by Stellar blockchain, featuring automated bounty payments with EDU tokens. Contributors earn rewards for creating educational content, while learners access free Web3 tutorials and courses.
+A full-stack Web3 education platform built on Stellar blockchain with frontend and backend components. Features automated bounty payments with EDU tokens, where contributors earn rewards for creating educational content while learners access free Web3 tutorials and courses.
 
 ## 🌟 Why Stellar?
 
@@ -17,13 +17,14 @@ A full-stack Web3 education platform powered by Stellar blockchain, featuring au
 
 ## 🚀 Tech Stack
 
-### Frontend
+### 🎨 Frontend (Next.js)
 - **Next.js 14** - React framework with App Router
 - **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
+- **Tailwind CSS** - Modern styling
 - **Stellar SDK** - Stellar blockchain integration
+- **React Components** - Bounty cards, contributor profiles
 
-### Backend
+### ⚙️ Backend (Node.js)
 - **Node.js** - Runtime environment
 - **Express** - Web framework
 - **TypeScript** - Type safety
@@ -31,39 +32,48 @@ A full-stack Web3 education platform powered by Stellar blockchain, featuring au
 - **PostgreSQL** - Database
 - **JWT** - Authentication
 - **Stellar SDK** - Blockchain interactions
-### Features
-- 🔐 Stellar wallet authentication
-- 📚 Educational content management
-- 💰 EDU token bounty system
-- 👥 Contributor profiles and reputation
-- 🏆 Certification system
-- 📊 Impact metrics dashboard
+
+### 🌟 Stellar Integration
+- **EDU Token** - Custom educational token on Stellar
+- **Bounty Escrow** - Secure payment system
+- **Reputation System** - On-chain contributor tracking
+- **Wallet Support** - Freighter, Albedo, and more
+### 🌟 Platform Features
+- 🔐 **Stellar Wallet Authentication** - Connect with Freighter, Albedo, and more
+- 📚 **Educational Content Management** - Create and manage learning materials
+- 💰 **EDU Token Bounty System** - Earn rewards for educational contributions
+- 👥 **Contributor Profiles** - Showcase skills and reputation on-chain
+- 🏆 **Certification System** - Verifiable learning achievements
+- 📊 **Impact Dashboard** - Track educational impact and earnings
+- ⚡ **Instant Payments** - 3-5 second EDU token transactions
+- 🌍 **Global Access** - No gas fees, worldwide accessibility
 
 ## 🛠️ Development Setup
 
-### Prerequisites
-- Node.js 18+
-- PostgreSQL
-- Stellar wallet (any compatible wallet)
+### 📋 Prerequisites
+- **Node.js 18+** - JavaScript runtime
+- **PostgreSQL** - Database
+- **Stellar Wallet** - Freighter, Albedo, or compatible wallet
 
-### Quick Start
+### 🚀 Quick Start
 
 1. **Clone and install dependencies**
    ```bash
+   git clone https://github.com/zeeboys/education.git
    cd decentralized-education
    npm run install:all
    ```
 
-2. **Setup environment**
+2. **Setup environment variables**
    ```bash
-   # Backend
+   # Backend environment
    cd backend && cp .env.example .env
    
-   # Frontend  
+   # Frontend environment  
    cd frontend && cp .env.example .env.local
    ```
 
-3. **Setup database**
+3. **Setup PostgreSQL database**
    ```bash
    cd backend
    npx prisma migrate dev
@@ -72,12 +82,14 @@ A full-stack Web3 education platform powered by Stellar blockchain, featuring au
 
 4. **Start development servers**
    ```bash
-   # Terminal 1 - Backend
+   # Terminal 1 - Backend API (port 3001)
    cd backend && npm run dev
 
-   # Terminal 2 - Frontend
+   # Terminal 2 - Frontend (port 3000)
    cd frontend && npm run dev
    ```
+
+5. **Connect Stellar wallet** and start contributing!
 
 ### Environment Variables
 
@@ -114,27 +126,27 @@ NEXT_PUBLIC_API_URL="http://localhost:3001"
 
 For detailed setup instructions, see [docs/SETUP.md](docs/SETUP.md)
 
-## � How to Contribute
+## 🤝 How to Contribute
 
-### For Contributors
-1. **Browse Issues** - Find educational bounties that match your skills
-2. **Apply for Bounties** - Comment on issues with your experience and approach
-3. **Complete Work** - Follow requirements and submit pull requests
-4. **Get Rewarded** - Receive instant EDU token payments via Stellar
+### 👨‍💻 For Contributors
+1. **🔍 Browse Issues** - Find educational bounties matching your skills
+2. **📝 Apply for Bounties** - Submit proposals with experience and timeline
+3. **⚡ Complete Work** - Follow requirements and create educational content
+4. **💰 Get Rewarded** - Receive instant EDU token payments via Stellar
 
-### For Funders
-1. **Support Education** - Fund specific learning modules or contributors
-2. **Track Impact** - See exactly how your funds are used
-3. **Sustainable Giving** - Set up recurring EDU token streams
-4. **Global Access** - Support education worldwide with minimal fees
+### 🌟 For Funders
+1. **🎓 Support Education** - Fund specific learning modules or contributors
+2. **📊 Track Impact** - See exactly how your funds are used
+3. **🔄 Sustainable Giving** - Set up recurring EDU token streams
+4. **🌍 Global Access** - Support education worldwide with minimal fees
 
-### Quick Start for Contributors
+### 🚀 Quick Start for Contributors
 ```bash
 # 1. Find a bounty at https://github.com/zeeboys/education/issues
 # 2. Apply using the template in the issue
 # 3. Clone and setup the project
 git clone https://github.com/zeeboys/education.git
-cd education
+cd decentralized-education
 npm run install:all
 
 # 4. Create your feature branch
@@ -143,14 +155,14 @@ git checkout -b bounty/[issue-number]-[description]
 # 5. Complete the work and submit a PR
 ```
 
-### Stellar Integration
-- **Instant Payments**: EDU token rewards in 3-5 seconds
-- **Ultra-Low Fees**: 0.00001 XLM per transaction
-- **Global Access**: Available worldwide without gas fees
-- **Built-in DEX**: Native asset exchange capabilities
-- **Mobile-First**: Optimized for global accessibility
+### ⭐ Stellar Integration Benefits
+- **⚡ Instant Payments**: EDU token rewards in 3-5 seconds
+- **💸 Ultra-Low Fees**: 0.00001 XLM per transaction (~$0.000001)
+- **🌍 Global Access**: Available worldwide without gas fees
+- **🔄 Built-in DEX**: Native asset exchange capabilities
+- **📱 Mobile-First**: Optimized for global accessibility
 
-**Setup Guide**: See [docs/STELLAR_SETUP.md](docs/STELLAR_SETUP.md) for complete Stellar configuration.
+**📖 Setup Guide**: See [docs/SETUP.md](docs/SETUP.md) for complete Stellar configuration.
 
 ## 📄 License
 
