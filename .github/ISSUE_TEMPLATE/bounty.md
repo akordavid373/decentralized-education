@@ -1,8 +1,8 @@
 ---
-name: 🎓 Educational Bounty
-about: Create a new educational bounty for contributors
+name: 🎓 Educational Bounty (Stellar)
+about: Create a new educational bounty for contributors with EDU token rewards
 title: '[BOUNTY] '
-labels: ['bounty', 'education']
+labels: ['bounty', 'education', 'stellar']
 assignees: ''
 
 ---
@@ -11,22 +11,29 @@ assignees: ''
 
 ### **Category**
 - [ ] 📚 Content Creation
-- [ ] 💻 Development
+- [ ] 💻 Development (Frontend/Backend/Contracts)
 - [ ] 🎨 Design & UX
 - [ ] 🌍 Translation
-- [ ] 🔍 Review
+- [ ] 🔍 Review & Testing
 - [ ] 🔧 Maintenance
 - [ ] 📊 Research
 - [ ] 🤝 Community
+- [ ] ⚡ Smart Contracts (Stellar/Soroban)
 
 ### **Difficulty Level**
-- [ ] 🌱 Beginner (0.05-0.1 ETH)
-- [ ] 🚀 Intermediate (0.1-0.3 ETH)
-- [ ] ⚡ Advanced (0.3-0.5 ETH)
-- [ ] 🏆 Expert (0.5+ ETH)
+- [ ] 🌱 Beginner (50-100 EDU)
+- [ ] 🚀 Intermediate (100-300 EDU)
+- [ ] ⚡ Advanced (300-500 EDU)
+- [ ] 🏆 Expert (500+ EDU)
 
 ### **Reward Amount**
-ETH: [e.g., 0.15]
+EDU Tokens: [e.g., 150]
+USD Equivalent: [e.g., ~$1.50]
+
+### **Payment Method**
+- [x] ✅ Instant Stellar payment (3-5 seconds)
+- [x] ✅ Ultra-low fees (~$0.000001)
+- [x] ✅ Global accessibility
 
 ### **Deadline**
 [Optional deadline for completion]
@@ -98,6 +105,7 @@ Any additional context or special considerations:
 ### **Application Template**
 ```
 **GitHub:** @username
+**Stellar Address:** GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 **Experience:** [Brief description of relevant experience]
 **Approach:** [How you plan to complete this bounty]
 **Timeline:** [Estimated completion time]
@@ -111,18 +119,33 @@ Any additional context or special considerations:
 Once assigned, contributors can:
 ```bash
 # Clone the repository
-git clone https://github.com/akordavid373/decentralized-education.git
+git clone https://github.com/zeeboys/education.git
+cd decentralized-education
 
-# Create feature branch
-git checkout -b bounty/[issue-number]-[brief-description]
+# Setup environment
+npm run install:all
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env.local
+
+# Setup Stellar wallet (Freighter, Albedo, etc.)
+# Create EDU token trustline if needed
 
 # Start development
-npm run install:all
 npm run dev
 ```
 
 ---
 
-## 💰 Reward Distribution
+## 💰 Stellar Reward Distribution
 
-Rewards will be distributed via DripsNetwork after successful completion and review.
+✅ **Instant Payment**: EDU tokens sent within 3-5 seconds
+✅ **Ultra-Low Fees**: ~$0.000001 per transaction  
+✅ **Global Access**: Available worldwide without gas fees
+✅ **On-Chain Tracking**: Transparent payment verification
+✅ **Smart Contract Escrow**: Secure fund release
+
+**Payment Process:**
+1. Work completed and merged to main branch
+2. Smart contract automatically releases EDU tokens
+3. Transaction verified on Stellar blockchain
+4. Reputation points added to contributor profile

@@ -1,16 +1,16 @@
-# 🤝 Contributing to Decentralized Education
+# 🤝 Contributing to Decentralized Education Platform (Stellar)
 
-Thank you for your interest in contributing to the Decentralized Education Platform! This guide will help you get started with contributing through our bounty system.
+Thank you for your interest in contributing to the Stellar-based Decentralized Education Platform! This guide will help you get started with contributing through our EDU token bounty system.
 
 ## 🎯 How to Contribute
 
 ### 1. Find a Bounty
 
-Browse our [GitHub Issues](https://github.com/akordavid373/decentralized-education/issues) for bounties labeled with `bounty`. Each bounty includes:
+Browse our [GitHub Issues](https://github.com/zeeboys/education/issues) for bounties labeled with `bounty`. Each bounty includes:
 
-- **Category** (Content Creation, Development, Design, etc.)
+- **Category** (Content Creation, Development, Design, Translation, etc.)
 - **Difficulty Level** (Beginner to Expert)
-- **Reward Amount** (ETH)
+- **Reward Amount** (EDU tokens)
 - **Requirements** and **Acceptance Criteria**
 - **Skills Required**
 
@@ -20,6 +20,7 @@ Browse our [GitHub Issues](https://github.com/akordavid373/decentralized-educati
 2. **Comment on the issue** using the application template:
    ```markdown
    **GitHub:** @yourusername
+   **Stellar Address:** GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
    **Experience:** [Brief description of relevant experience]
    **Approach:** [How you plan to complete this bounty]
    **Timeline:** [Estimated completion time]
@@ -33,7 +34,7 @@ Once assigned:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/akordavid373/decentralized-education.git
+   git clone https://github.com/zeeboys/education.git
    cd decentralized-education
    ```
 
@@ -42,6 +43,7 @@ Once assigned:
    npm run install:all
    cp backend/.env.example backend/.env
    cp frontend/.env.example frontend/.env.local
+   # Setup Stellar wallet (Freighter, Albedo, etc.)
    ```
 
 3. **Create a feature branch**:
@@ -54,54 +56,56 @@ Once assigned:
 
 ### 4. Submit Your Work
 
-1. **Create a Pull Request** with:
-   - Clear title referencing the bounty number
-   - Detailed description of changes made
-   - Screenshots or demos if applicable
-   - Link to the original issue: `Closes #issue-number`
-
-2. **PR Template**:
-   ```markdown
-   ## Bounty Completion
-   - **Issue**: #issue-number
-   - **Bounty Title**: [Title of the bounty]
-   - **Changes Made**: [Detailed description]
-   - **Testing**: [How you tested your work]
-   - **Screenshots/Demo**: [If applicable]
-   
-   ## Checklist
-   - [ ] Code follows project style guidelines
-   - [ ] Self-reviewed the code
-   - [ ] Tested the functionality
-   - [ ] Documentation updated (if needed)
+1. **Push directly to main** (no PR needed):
+   ```bash
+   git add .
+   git commit -m "Complete bounty #[issue-number]: [brief description]"
+   git push origin main
+   git push organization main
    ```
 
-### 5. Get Paid
+2. **Comment on the issue** with completion details:
+   ```markdown
+   **Bounty Completed**: #[issue-number]
+   **Changes Made**: [Detailed description]
+   **Testing**: [How you tested your work]
+   **Screenshots/Demo**: [If applicable]
+   **Stellar Address**: GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   ```
 
-Once your PR is merged:
+### 5. Get Paid (EDU Tokens)
 
-1. **Automatic reward distribution** via DripsNetwork
-2. **On-chain payment tracking** for transparency
+Once your work is merged:
+
+1. **Instant EDU token payment** via Stellar smart contracts
+2. **On-chain transaction tracking** for transparency
 3. **Reputation points** added to your profile
 4. **Certificate of completion** for your portfolio
 
-## 💰 Reward System
+## 💰 EDU Token Reward System
 
 ### Bounty Tiers
 
-| Difficulty | Reward Range | Example Tasks |
-|------------|--------------|---------------|
-| 🌱 Beginner | 0.05-0.1 ETH | Documentation, simple fixes |
-| 🚀 Intermediate | 0.1-0.3 ETH | Features, components |
-| ⚡ Advanced | 0.3-0.5 ETH | Complex integrations |
-| 🏆 Expert | 0.5+ ETH | Architecture, research |
+| Difficulty | Reward Range (EDU) | Example Tasks |
+|------------|-------------------|---------------|
+| 🌱 Beginner | 50-100 EDU | Documentation, simple fixes |
+| 🚀 Intermediate | 100-300 EDU | Features, components |
+| ⚡ Advanced | 300-500 EDU | Complex integrations |
+| 🏆 Expert | 500+ EDU | Architecture, research |
 
-### Payment Process
+### Stellar Payment Process
 
-1. **PR Merged** → Automatic reward trigger
-2. **DripsNetwork Stream** → 24-hour payment stream
-3. **On-chain Record** → Transparent payment history
-4. **Reputation Update** → Profile enhancement
+1. **Work Merged** → Instant EDU token payment (3-5 seconds)
+2. **Stellar Transaction** → On-chain payment verification
+3. **Smart Contract Escrow** → Secure fund release
+4. **Reputation Update** → On-chain profile enhancement
+
+### EDU Token Benefits
+
+- **Ultra-low fees**: ~$0.000001 per transaction
+- **Instant payments**: 3-5 second confirmations
+- **Global access**: Available worldwide without gas fees
+- **Built-in DEX**: Trade EDU tokens on Stellar DEX
 
 ## 🛠️ Development Guidelines
 
@@ -129,12 +133,27 @@ npm run test:e2e
 
 ```
 decentralized-education/
-├── frontend/          # Next.js application
-├── backend/           # Express API server
+├── frontend/          # Next.js application (React, TypeScript, Tailwind)
+├── backend/           # Express API server (Node.js, TypeScript, Prisma)
+├── contracts/        # Stellar smart contracts (Rust, Soroban)
 ├── shared/            # Shared types and utilities
-├── scripts/           # DripsNetwork scripts
+├── scripts/           # Stellar deployment scripts
 ├── docs/              # Documentation
 └── .github/           # Workflows and templates
+```
+
+### Smart Contract Development
+
+```bash
+# Build Stellar contracts
+cd contracts
+cargo build --target wasm32-unknown-unknown --release
+
+# Deploy contracts
+npm run deploy:all
+
+# Test contracts
+npm run test
 ```
 
 ## 🏆 Recognition System
@@ -180,16 +199,18 @@ Top contributors are displayed on:
 
 ### Getting Started
 
-- [Web3 Education](https://ethereum.org/en/developers/)
+- [Stellar Documentation](https://developers.stellar.org/)
+- [Soroban Smart Contracts](https://soroban.stellar.org/)
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Prisma Docs](https://www.prisma.io/docs/)
 
-### DripsNetwork
+### Stellar Development
 
-- [DripsNetwork Documentation](https://docs.drips.network/)
-- [Smart Contract Integration](https://docs.drips.network/smart-contracts)
-- [Stream Management](https://docs.drips.network/streams)
+- [Stellar SDK for JavaScript](https://github.com/stellar/js-stellar-sdk)
+- [Soroban Documentation](https://soroban.stellar.org/docs/)
+- [Stellar Laboratory](https://laboratory.stellar.org/)
+- [Freighter Wallet](https://freighter.app/)
 
 ## 🆘 Getting Help
 
@@ -204,22 +225,30 @@ Top contributors are displayed on:
 
 1. **Setup Problems**: Check environment configuration
 2. **Database Issues**: Verify PostgreSQL connection
-3. **Wallet Connection**: Ensure MetaMask is configured
-4. **Payment Delays**: DripsNetwork may take 24 hours
+3. **Stellar Wallet Connection**: Ensure Freighter/Albedo is configured
+4. **Contract Deployment**: Check Stellar network settings
+5. **EDU Token Balance**: Verify trustline is established
 
 ## 📈 Impact Metrics
 
 Your contributions help:
 
-- 🎓 **Educate** thousands of Web3 learners
-- 💰 **Distribute** $1000+ in monthly rewards
+- 🎓 **Educate** thousands of Web3 learners globally
+- 💰 **Distribute** 10,000+ EDU tokens in monthly rewards
 - 🌍 **Build** a global education community
 - 🔓 **Democratize** access to Web3 knowledge
+- ⚡ **Enable** instant payments via Stellar
 
 ## 🎉 Thank You!
 
-Every contribution helps make Web3 education more accessible and sustainable. We're excited to have you join our community of builders and educators!
+Every contribution helps make Web3 education more accessible and sustainable through Stellar's ultra-fast, low-cost blockchain. We're excited to have you join our community of builders and educators!
 
 ---
 
-**Ready to start?** [Browse Available Bounties](https://github.com/akordavid373/decentralized-education/issues?q=is%3Aissue+is%3Aopen+label%3Abounty) 🚀
+**Ready to start?** [Browse Available Bounties](https://github.com/zeeboys/education/issues?q=is%3Aissue+is%3Aopen+label%3Abounty) 🚀
+
+**Requirements:**
+- ✅ Stellar wallet (Freighter, Albedo, or compatible)
+- ✅ Basic knowledge of React/Node.js
+- ✅ Passion for education and Web3
+- ✅ Ready to earn EDU tokens!
